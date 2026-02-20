@@ -9,4 +9,7 @@ We get the data from the official Icfes/Saber source. In particular, the date th
 - Athena service: proy1-workgroup -> analytic engine: Athena SQL -> query result: proy1-exit-bucket -> data source AWS Glue data Catalog.
 - AWS Glue Data Catalog with it's associate crawler, crawling the Icfes CSV file. 
 After this, we just run the crawler so we can make the Athena SQL queries later on. 
-3. Queries through Athena SQL
+3. Update table properties and schema
+- Update table icfes_data schema with the icfes_data_schema.json file.
+- Update table icfes_data properties with use.null.for.invalid.data = true
+4. Queries through Athena SQL
