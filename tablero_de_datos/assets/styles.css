@@ -1,0 +1,108 @@
+/*Importar fuentes*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+
+
+body {
+    background-color: #f4f7fb;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.header {
+    background-color: #d6eaff;
+    padding: 30px 0;
+    margin-bottom: 30px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.header-title {
+    text-align: center;
+    margin: 0;
+    color: #1f3c88;
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: 0.5px;
+}
+
+.header-subtitle {
+    text-align: center;
+    margin: 6px 0 0 0;
+    color: #1f3c88;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+.header-desc {
+    text-align: center;
+    margin: 10px auto 0 auto;
+    max-width: 700px;        
+    color: #4a6fa5;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.main-container {
+    width: 85%;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.column {
+    flex: 1;
+}
+
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.Select-control {
+    border-radius: 10px !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+
+.interpretacion {
+    text-align: center;
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 14px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.js-plotly-plot .plotly table {
+    font-family: 'Poppins', sans-serif !important;
+}
+
+
+@media (max-width: 900px) {
+
+    .row {
+        flex-direction: column;
+    }
+
+    .main-container {
+        width: 95%;
+    }
+}
