@@ -198,7 +198,7 @@ def generar_interpretacion(df_plot, contexto):
         }))
 
     return html.Div([
-        html.H4(f"Efectos Significativos ({len(df_sig)})", 
+        html.H4(f"Efectos Significativos (coef.) ({len(df_sig)})", 
                 style={"color": "#1f3c88", "fontSize": "14px", "marginBottom": "12px", "textAlign": "center"}),
         *items,
         html.P("* Efectos estimados con las demás variables constantes.",
