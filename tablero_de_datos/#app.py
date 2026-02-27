@@ -8,7 +8,7 @@ import statsmodels.formula.api as smf
 import re
 
 # Cargar datos
-df = pd.read_csv(r"C:\Users\manes\Downloads\P1-Analitica\clean_data\filtered_icfes_data.csv")
+df = pd.read_csv("../clean_data/filtered_icfes_data.csv")
 
 # Ordenar niveles educativos para gráficas y tablas
 orden = [
