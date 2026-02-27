@@ -487,23 +487,19 @@ def actualizar_contenido(seccion, tipo_edu, vista_estadistica):
         n_estudiantes = len(df)
         promedio_global = df['punt_global'].mean()
         
-        # Insights naturaleza
-        oficial_prom = df[df['cole_naturaleza'] == 'OFICIAL']['punt_global'].mean()
-        no_oficial_prom = df[df['cole_naturaleza'] == 'NO OFICIAL']['punt_global'].mean()
-        brecha_naturaleza = no_oficial_prom - oficial_prom
+        # Coefficients from regression model (adjusted effects)
+        coef_naturaleza = coef_table[coef_table["index"].str.contains("cole_naturaleza")]["Coeficiente"].values
+        brecha_naturaleza = coef_naturaleza[0] if len(coef_naturaleza) > 0 else 0
         
-        # Insights calendario
-        cal_a_prom = df[df['cole_calendario'] == 'A']['punt_global'].mean()
-        cal_b_prom = df[df['cole_calendario'] == 'B']['punt_global'].mean()
-        brecha_calendario = abs(cal_a_prom - cal_b_prom)
+        coef_calendario_b = coef_table[coef_table["index"].str.contains(r"cole_calendario.*\[T\.B\]")]["Coeficiente"].values
+        brecha_calendario = abs(coef_calendario_b[0]) if len(coef_calendario_b) > 0 else 0
         
-        # Insights family education
-        postgrado_avg = df[df['fami_educacionmadre'] == 'Postgrado']['punt_global'].mean()
-        ninguno_avg = df[df['fami_educacionmadre'] == 'Ninguno']['punt_global'].mean()
-        brecha_educacion = postgrado_avg - ninguno_avg
-        postgrado_avg_dad = df[df['fami_educacionpadre'] == 'Postgrado']['punt_global'].mean()
-        ninguno_avg_dad = df[df['fami_educacionpadre'] == 'Ninguno']['punt_global'].mean()
-        brecha_educacion_dad = postgrado_avg_dad - ninguno_avg_dad
+        # Family education coefficients (selecting most vs least educated)
+        coef_madre = coef_table[coef_table["index"].str.contains("fami_educacionmadre")]["Coeficiente"]
+        brecha_educacion = coef_madre.max() - coef_madre.min() if len(coef_madre) > 0 else 0
+        
+        coef_padre = coef_table[coef_table["index"].str.contains("fami_educacionpadre")]["Coeficiente"]
+        brecha_educacion_dad = coef_padre.max() - coef_padre.min() if len(coef_padre) > 0 else 0
         
         return html.Div([
             html.H2("Resumen General del Análisis", 
@@ -603,19 +599,17 @@ def actualizar_contenido(seccion, tipo_edu, vista_estadistica):
 
         df_plot = coef_table[coef_table["index"].str.contains("cole_naturaleza")]
         
-        # Gap
-        oficial_prom = df[df['cole_naturaleza'] == 'OFICIAL']['punt_global'].mean()
-        no_oficial_prom = df[df['cole_naturaleza'] == 'NO OFICIAL']['punt_global'].mean()
-        brecha = no_oficial_prom - oficial_prom
+        # Get coefficient (adjusted effect)
+        coef_naturaleza = df_plot["Coeficiente"].values[0] if len(df_plot) > 0 else 0
         pct_oficial = (df['cole_naturaleza'] == 'OFICIAL').sum() / len(df) * 100
         
-        hallazgo_text = (f"Existe una brecha de {brecha:.1f} puntos entre colegios no oficiales (privados) y oficiales. "
-                        f"Los colegios oficiales representan el {pct_oficial:.1f}% de la muestra, "
-                        f"con un promedio de {oficial_prom:.1f} puntos vs {no_oficial_prom:.1f} en no oficiales.")
+        hallazgo_text = (f"El efecto estimado de asistir a un colegio no oficial (privado) es de {coef_naturaleza:+.1f} puntos "
+                        f"en el puntaje global. "
+                        f"Los colegios oficiales representan el {pct_oficial:.1f}% de la muestra.")
         
         # Select view
         if vista_estadistica == "forest":
-            fig_estadistica = grafico_forest(df_plot, "Efectos Estimados – Naturaleza del Colegio")
+            fig_estadistica = grafico_forest(df_plot, "Efectos Estimados - Naturaleza del Colegio")
             vista_grafico = dcc.Graph(figure=fig_estadistica)
         elif vista_estadistica == "tabla":
             fig_estadistica = grafico_tabla(df_plot)
@@ -671,17 +665,17 @@ def actualizar_contenido(seccion, tipo_edu, vista_estadistica):
 
         df_plot = coef_table[coef_table["index"].str.contains("cole_calendario")]
         
-        cal_a_prom = df[df['cole_calendario'] == 'A']['punt_global'].mean()
-        cal_b_prom = df[df['cole_calendario'] == 'B']['punt_global'].mean()
+        # Get coefficient for calendar B (adjusted effect vs calendar A)
+        coef_cal_b = df_plot[df_plot["index"].str.contains(r"\[T\.B\]")]["Coeficiente"].values
+        efecto_cal_b = coef_cal_b[0] if len(coef_cal_b) > 0 else 0
         pct_cal_a = (df['cole_calendario'] == 'A').sum() / len(df) * 100
-        diferencia = abs(cal_a_prom - cal_b_prom)
         
         hallazgo_text = (f"El calendario A representa el {pct_cal_a:.1f}% de los estudiantes. "
-                        f"La diferencia entre calendario A ({cal_a_prom:.1f} pts) y B ({cal_b_prom:.1f} pts) "
-                        f"es de {diferencia:.1f} puntos, sugiriendo {'ventaja para el calendario A' if cal_a_prom > cal_b_prom else 'ventaja para el calendario B'}.")
+                        f"El efecto estimado del calendario B es de {efecto_cal_b:+.1f} puntos "
+                        f"respecto al calendario A.")
         
         if vista_estadistica == "forest":
-            fig_estadistica = grafico_forest(df_plot, "Efectos Estimados – Calendario Académico")
+            fig_estadistica = grafico_forest(df_plot, "Efectos Estimados - Calendario Académico")
             vista_grafico = dcc.Graph(figure=fig_estadistica)
         elif vista_estadistica == "tabla":
             fig_estadistica = grafico_tabla(df_plot)
@@ -730,17 +724,20 @@ def actualizar_contenido(seccion, tipo_edu, vista_estadistica):
                 labels={"fami_educacionmadre": "Nivel Educativo Madre", "punt_global": "Puntaje Global"}
             )
             df_plot = coef_table[coef_table["index"].str.contains("fami_educacionmadre")]
-            fig_forest = grafico_forest(df_plot, "Efectos Estimados – Educación Madre", 
+            fig_forest = grafico_forest(df_plot, "Efectos Estimados - Educación Madre", 
                                        variable="fami_educacionmadre")
             
-            # Insight mom
-            postgrado_avg = df[df['fami_educacionmadre'] == 'Postgrado']['punt_global'].mean()
-            ninguno_avg = df[df['fami_educacionmadre'] == 'Ninguno']['punt_global'].mean()
-            brecha_edu = postgrado_avg - ninguno_avg
-            hallazgo_text = (f"La educación materna muestra fuerte correlación con el rendimiento. "
-                           f"Estudiantes con madres con postgrado promedian {postgrado_avg:.1f} pts, "
-                           f"mientras que aquellos con madres sin educación formal promedian {ninguno_avg:.1f} pts "
-                           f"(brecha de {brecha_edu:.1f} puntos).")
+            # Get coefficient range (max - min effect)
+            if len(df_plot) > 0:
+                coef_max = df_plot["Coeficiente"].max()
+                coef_min = df_plot["Coeficiente"].min()
+                rango_efecto = coef_max - coef_min
+            else:
+                rango_efecto = 0
+            
+            hallazgo_text = (f"La educación materna muestra efectos significativos en el rendimiento. "
+                           f"El rango de efectos estimados entre el nivel más alto y más bajo de educación materna "
+                           f"es de {rango_efecto:.1f} puntos.")
             
         elif tipo_edu == "padre":
             fig = px.box(
@@ -751,17 +748,20 @@ def actualizar_contenido(seccion, tipo_edu, vista_estadistica):
                 labels={"fami_educacionpadre": "Nivel Educativo Padre", "punt_global": "Puntaje Global"}
             )
             df_plot = coef_table[coef_table["index"].str.contains("fami_educacionpadre")]
-            fig_forest = grafico_forest(df_plot, "Efectos Estimados – Educación Padre", 
+            fig_forest = grafico_forest(df_plot, "Efectos Estimados - Educación Padre", 
                                        variable="fami_educacionpadre")
             
-            # Insight dad
-            postgrado_avg = df[df['fami_educacionpadre'] == 'Postgrado']['punt_global'].mean()
-            ninguno_avg = df[df['fami_educacionpadre'] == 'Ninguno']['punt_global'].mean()
-            brecha_edu = postgrado_avg - ninguno_avg
-            hallazgo_text = (f"La educación paterna también es determinante. "
-                           f"Estudiantes con padres con postgrado promedian {postgrado_avg:.1f} pts, "
-                           f"comparado con {ninguno_avg:.1f} pts para padres sin educación formal "
-                           f"(brecha de {brecha_edu:.1f} puntos).")
+            # Get coefficient range (max - min effect)
+            if len(df_plot) > 0:
+                coef_max = df_plot["Coeficiente"].max()
+                coef_min = df_plot["Coeficiente"].min()
+                rango_efecto = coef_max - coef_min
+            else:
+                rango_efecto = 0
+            
+            hallazgo_text = (f"La educación paterna también muestra efectos determinantes. "
+                           f"El rango de efectos estimados entre el nivel más alto y más bajo de educación paterna "
+                           f"es de {rango_efecto:.1f} puntos.")
             
         else:  # both
             df_melt = df.melt(
@@ -782,12 +782,19 @@ def actualizar_contenido(seccion, tipo_edu, vista_estadistica):
             )
             fig.update_layout(showlegend=False, autosize=True)
             df_plot = coef_table[coef_table["index"].str.contains("fami_educacion")]
-            fig_forest = grafico_forest(df_plot, "Efectos Estimados – Educación Familiar", 
+            fig_forest = grafico_forest(df_plot, "Efectos Estimados - Educación Familiar", 
                                        variable="fami_educacionmadre")
             
-            # insight both
+            # Get coefficient range for both parents
+            if len(df_plot) > 0:
+                coef_max = df_plot["Coeficiente"].max()
+                coef_min = df_plot["Coeficiente"].min()
+                rango_efecto = coef_max - coef_min
+            else:
+                rango_efecto = 0
+            
             hallazgo_text = (f"El nivel educativo de ambos padres influye significativamente en el desempeño. "
-                           f"La educación familiar es un predictor clave del rendimiento académico, "
+                           f"El rango de efectos estimados para educación familiar es de {rango_efecto:.1f} puntos, "
                            f"evidenciando la importancia de programas de apoyo para familias con menor nivel educativo.")
 
         fig.update_layout(template="simple_white", height=400, font=dict(family="Poppins"))
