@@ -1,108 +1,350 @@
-/*Importar fuentes*/
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* ==================== GLOBAL STYLES ==================== */
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: #f4f7fb;
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
     color: #2c3e50;
+    overflow-x: hidden;
 }
 
-.header {
-    background-color: #d6eaff;
-    padding: 30px 0;
-    margin-bottom: 30px;
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+
+/* ==================== CUSTOM SCROLLBAR ==================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-.header-title {
-    text-align: center;
-    margin: 0;
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1f3c88;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4a6fa5;
+}
+
+
+/* ==================== NAVIGATION STYLES ==================== */
+
+
+/* Hamburger Menu Button */
+
+.menu-toggle-button {
+    display: none !important;
+    padding: 0 !important;
+}
+
+.menu-close-button {
+    display: none !important;
+    padding: 0 !important;
+}
+
+button {
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+
+/* Radio button container hover effect */
+
+input[type="radio"]+label {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked+label {
     color: #1f3c88;
-    font-weight: 600;
-    font-size: 30px;
-    letter-spacing: 0.5px;
-}
-
-.header-subtitle {
-    text-align: center;
-    margin: 6px 0 0 0;
-    color: #1f3c88;
-    font-size: 18px;
-    font-weight: 400;
-    letter-spacing: 0.3px;
-}
-
-.header-desc {
-    text-align: center;
-    margin: 10px auto 0 auto;
-    max-width: 700px;        
-    color: #4a6fa5;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 1.6;
-}
-
-.main-container {
-    width: 85%;
-    margin: auto;
-}
-
-.row {
-    display: flex;
-    gap: 25px;
-    margin-top: 25px;
-}
-
-.column {
-    flex: 1;
-}
-
-
-.card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
-    transition: all 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: translateY(-3px);
-}
-
-.Select-control {
-    border-radius: 10px !important;
-    font-family: 'Poppins', sans-serif !important;
-}
-
-
-.interpretacion {
-    text-align: center;
-    font-size: 17px;
     font-weight: 500;
-    margin-top: 30px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 14px;
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
 }
 
+
+/* ==================== HEADER STYLES ==================== */
+
+.dashboard-header {
+    background: linear-gradient(135deg, #d6eaff 0%, #e8f4ff 100%);
+    border-bottom: 3px solid #1f3c88;
+    box-shadow: 0 2px 8px rgba(31, 60, 136, 0.1);
+}
+
+
+/* ==================== CARD STYLES ==================== */
+
+.metric-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-left: 4px solid #1f3c88;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(31, 60, 136, 0.15) !important;
+}
+
+
+/* Key Finding Card */
+
+.key-finding {
+    background: linear-gradient(135deg, #1f3c88 0%, #2d5aa8 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(31, 60, 136, 0.2);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.key-finding:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(31, 60, 136, 0.3);
+}
+
+.key-finding-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    opacity: 0.9;
+}
+
+.key-finding-text {
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.key-finding-icon {
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+
+/* ==================== GRAPHS ==================== */
+
+.js-plotly-plot {
+    border-radius: 8px;
+    overflow: hidden;
+}
 
 .js-plotly-plot .plotly table {
     font-family: 'Poppins', sans-serif !important;
 }
 
 
-@media (max-width: 900px) {
+/* ==================== DISTRIBUTION CHART ==================== */
 
-    .row {
+.distribution-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1f3c88;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+
+/* ==================== MOBILE MENU OVERLAY ==================== */
+
+#menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#menu-overlay.active {
+    display: block;
+}
+
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+
+/* Desktop (sticky sidebar) */
+
+@media (min-width: 769px) {
+    #sidebar-nav {
+        position: sticky !important;
+        width: 240px !important;
+        top: 0 !important;
+        left: auto !important;
+        min-height: calc(100vh - 150px) !important;
+        padding: 25px 20px !important;
+        margin-bottom: 0 !important;
+        border-bottom: none !important;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05) !important;
+        z-index: auto !important;
+        transition: none !important;
+    }
+    #main-container {
+        display: flex !important;
+        width: 100% !important;
+    }
+    #contenido-principal {
+        flex: 1 !important;
+        padding: 30px !important;
+        background-color: #f4f7fb !important;
+        min-width: 0 !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .key-finding-text {
+        font-size: 14px;
+    }
+}
+
+
+/* Tablet and smaller screens */
+
+@media (max-width: 992px) {
+    body {
+        font-size: 14px;
+    }
+    #main-container {
         flex-direction: column;
     }
+    #contenido-principal {
+        padding: 20px !important;
+    }
+    .metric-card {
+        padding: 18px !important;
+        font-size: 13px;
+    }
+    .key-finding {
+        padding: 18px;
+        margin-bottom: 15px;
+    }
+}
 
-    .main-container {
-        width: 95%;
+
+/* Mobile devices */
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 20px !important;
+    }
+    h2 {
+        font-size: 18px !important;
+    }
+    h3 {
+        font-size: 14px !important;
+    }
+    .dashboard-header {
+        padding: 15px 15px !important;
+    }
+    .dashboard-header>div {
+        padding: 15px 15px !important;
+    }
+    .dashboard-header img {
+        height: 60px !important;
+        margin-right: 15px !important;
+    }
+    .menu-toggle-button {
+        display: inline-block !important;
+    }
+    .menu-close-button {
+        display: inline-block !important;
+    }
+    #main-container {
+        flex-direction: column;
+    }
+    /* Mobile sidebar positioning via callback */
+    #sidebar-nav {
+        width: 240px !important;
+        max-height: 100vh !important;
+        padding: 25px 20px !important;
+        overflow-y: auto !important;
+        z-index: 1000 !important;
+        transition: left 0.3s ease !important;
+    }
+    #contenido-principal {
+        padding: 15px !important;
+    }
+    .metric-card {
+        flex-basis: calc(50% - 10px) !important;
+        padding: 15px !important;
+        min-width: 150px;
+        margin-bottom: 10px;
+    }
+    .js-plotly-plot {
+        min-height: 300px;
+    }
+    .key-finding {
+        padding: 15px;
+        margin-bottom: 15px;
+        font-size: 13px;
+    }
+    .key-finding-text {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+    #seccion-selector {
+        font-size: 12px;
+    }
+    .distribution-container {
+        padding: 10px;
+    }
+    .dashboard-header p {
+        font-size: 12px !important;
+    }
+    .js-plotly-plot .plotly {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+
+/* Small phones */
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 18px !important;
+    }
+    h2 {
+        font-size: 16px !important;
+    }
+    .dashboard-header img {
+        height: 50px !important;
+        margin-right: 10px !important;
+    }
+    .dashboard-header>div {
+        padding: 10px 10px !important;
+    }
+    .metric-card {
+        flex-basis: 100% !important;
+        padding: 12px !important;
+        font-size: 11px;
+    }
+    #contenido-principal {
+        padding: 10px !important;
+    }
+    .key-finding {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    .key-finding-text {
+        font-size: 11px;
+    }
+    .key-finding-icon {
+        font-size: 16px;
     }
 }
