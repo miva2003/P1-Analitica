@@ -373,13 +373,13 @@ app.layout = html.Div([
             html.Div(
                 dcc.Graph(id="forest_plot"),
                 className="card",
-                style={"flex": "1", "minWidth": "0"}   # ← antes era 1.3
+                style={"flex": "1", "minWidth": "0"}   
             ),
             html.Div(
                 id="interpretacion",
                 className="card",
                 style={
-                    "flex": "1",                         # ← mismo flex que forest
+                    "flex": "1",                         
                     "minWidth": "0",
                     "overflowY": "auto",
                     "maxHeight": "460px",
