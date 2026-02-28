@@ -1,0 +1,205 @@
+[{
+        "Name": "periodo",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_tipodocumento",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_consecutivo",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_area_ubicacion",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_bilingue",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_calendario",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_caracter",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_cod_dane_establecimiento",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_cod_dane_sede",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_cod_depto_ubicacion",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_cod_mcpio_ubicacion",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_codigo_icfes",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_depto_ubicacion",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_genero",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_jornada",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_mcpio_ubicacion",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_naturaleza",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_nombre_establecimiento",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_nombre_sede",
+        "Type": "string"
+    },
+    {
+        "Name": "cole_sede_principal",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_cod_depto_presentacion",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_cod_mcpio_presentacion",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_cod_reside_depto",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_cod_reside_mcpio",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_depto_presentacion",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_depto_reside",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_estadoinvestigacion",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_estudiante",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_fechanacimiento",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_genero",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_mcpio_presentacion",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_mcpio_reside",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_nacionalidad",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_pais_reside",
+        "Type": "string"
+    },
+    {
+        "Name": "estu_privado_libertad",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_cuartoshogar",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_educacionmadre",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_educacionpadre",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_estratovivienda",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_personashogar",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_tieneautomovil",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_tienecomputador",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_tieneinternet",
+        "Type": "string"
+    },
+    {
+        "Name": "fami_tienelavadora",
+        "Type": "string"
+    },
+    {
+        "Name": "desemp_ingles",
+        "Type": "string"
+    },
+    {
+        "Name": "punt_ingles",
+        "Type": "double"
+    },
+    {
+        "Name": "punt_matematicas",
+        "Type": "double"
+    },
+    {
+        "Name": "punt_sociales_ciudadanas",
+        "Type": "double"
+    },
+    {
+        "Name": "punt_c_naturales",
+        "Type": "double"
+    },
+    {
+        "Name": "punt_lectura_critica",
+        "Type": "double"
+    },
+    {
+        "Name": "punt_global",
+        "Type": "double"
+    }
+]
