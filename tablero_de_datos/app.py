@@ -496,7 +496,7 @@ def actualizar_contenido(seccion, tipo_edu, vista_estadistica):
         
         # Family education coefficients (selecting most vs least educated)
         coef_madre = coef_table[coef_table["index"].str.contains("fami_educacionmadre")]["Coeficiente"]
-        brecha_educacion = coef_madre.max() - coef_madre.min() if len(coef_madre) > 0 else 0
+        brecha_educacion = coef_madre.max() - coef_madre.min() if len(coef_madre) > 0 else 0 # In the end we didn't showed them (too noisy)
         
         coef_padre = coef_table[coef_table["index"].str.contains("fami_educacionpadre")]["Coeficiente"]
         brecha_educacion_dad = coef_padre.max() - coef_padre.min() if len(coef_padre) > 0 else 0
@@ -528,14 +528,18 @@ def actualizar_contenido(seccion, tipo_edu, vista_estadistica):
                     html.H3(f"{brecha_naturaleza:.1f}", style={"fontSize": "32px", "color": "#c0392b" if brecha_naturaleza > 0 else "#27ae60", 
                                                      "margin": "0", "fontFamily": "Poppins"}),
                     html.P("Brecha Oficial vs Privado", style={"fontSize": "13px", "color": "#666", 
-                                                                 "margin": "5px 0 0 0"})
+                                                                 "margin": "5px 0 0 0"}),
+                    html.P("*Las demás variables del modelo constantes", style={"fontSize": "11px", "color": "#999999", "margin": "4px 0 0 0",
+                                                            "fontStyle": "italic",})
                 ], className="metric-card", style={"padding": "25px", "borderRadius": "10px", 
                          "boxShadow": "0 2px 8px rgba(0,0,0,0.08)", "textAlign": "center", "flex": "1", "minWidth": "0"}),
                 html.Div([
                     html.H3(f"{round(brecha_calendario,1):,}", style={"fontSize": "32px", "color": "#c0392b" if brecha_calendario > 0 else "#27ae60", 
                                                            "margin": "0", "fontFamily": "Poppins"}),
                     html.P("Brecha Calendario (A vs B)", style={"fontSize": "13px", "color": "#666", 
-                                                              "margin": "5px 0 0 0"})
+                                                              "margin": "5px 0 0 0"}),
+                    html.P("*Las demás variables del modelo constantes", style={"fontSize": "11px", "color": "#999999", "margin": "4px 0 0 0",
+                                                            "fontStyle": "italic",})
                 ], className="metric-card", style={"padding": "25px", "borderRadius": "10px", 
                          "boxShadow": "0 2px 8px rgba(0,0,0,0.08)", "textAlign": "center", "flex": "1", "minWidth": "0"})
                 
